@@ -63,52 +63,71 @@ public class MovieRecommender {
         return outpuList;
     }
 
-    public List<String>recommendMoviesUser12() throws TasteException {
+    public List<String> recommendMoviesUser12() throws TasteException {
 
-        PreferenceArray tempPrefs = new GenericUserPreferenceArray(3);
+        PreferenceArray tempPrefs = new GenericUserPreferenceArray(17);
         tempPrefs.setUserID(0, PlusAnonymousUserDataModel.TEMP_USER_ID);
 
         tempPrefs.setItemID(0, 1);
         tempPrefs.setItemID(1, 2);
         tempPrefs.setItemID(2, 3);
         tempPrefs.setItemID(3, 4);
-        tempPrefs.setItemID(4, 5);
-        tempPrefs.setItemID(5, 6);
-        tempPrefs.setItemID(6, 7);
-        tempPrefs.setItemID(7, 8);
-        tempPrefs.setItemID(8, 9);
-        tempPrefs.setItemID(9, 10);
-        tempPrefs.setItemID(10, 11);
-        tempPrefs.setItemID(11, 12);
-        tempPrefs.setItemID(12, 13);
-        tempPrefs.setItemID(13, 14);
-        tempPrefs.setItemID(14, 15);
-        tempPrefs.setItemID(15, 16);
-        tempPrefs.setItemID(16, 17);
-        tempPrefs.setItemID(17, 18);
-        tempPrefs.setItemID(18, 19);
-        tempPrefs.setItemID(19, 20);
-        tempPrefs.setItemID(20, 21);
-        tempPrefs.setItemID(21, 22);
-        tempPrefs.setItemID(22, 23);
-        tempPrefs.setItemID(23, 24);
+        tempPrefs.setItemID(4, 6);
+        tempPrefs.setItemID(5, 7);
+        tempPrefs.setItemID(6, 8);
+        tempPrefs.setItemID(7, 10);
+        tempPrefs.setItemID(8, 11);
+        tempPrefs.setItemID(9, 13);
+        tempPrefs.setItemID(10, 14);
+        tempPrefs.setItemID(11, 19);
+        tempPrefs.setItemID(12, 20);
+        tempPrefs.setItemID(13, 21);
+        tempPrefs.setItemID(14, 22);
+        tempPrefs.setItemID(15, 23);
+        tempPrefs.setItemID(16, 24);
 
-        tempPrefs.setValue(0, 1.0);
+        tempPrefs.setValue(0, 2.0f);
         tempPrefs.setValue(1, 3.0f);
-        tempPrefs.setValue(2, 5.0f);
+        tempPrefs.setValue(2, 4.0f);
+        tempPrefs.setValue(3, 4.0f);
+        tempPrefs.setValue(4, 2.0f);
+        tempPrefs.setValue(5, 4.0f);
+        tempPrefs.setValue(6, 5.0f);
+        tempPrefs.setValue(7, 4.0f);
+        tempPrefs.setValue(8, 4.0f);
+        tempPrefs.setValue(9, 5.0f);
+        tempPrefs.setValue(10, 3.0f);
+        tempPrefs.setValue(11, 5.0f);
+        tempPrefs.setValue(12, 4.0f);
+        tempPrefs.setValue(13, 4.0f);
+        tempPrefs.setValue(14, 3.0f);
+        tempPrefs.setValue(15, 5.0f);
+        tempPrefs.setValue(16, 5.0f);
 
         // prepare new user's preferences
         PlusAnonymousUserDataModel tempModel = new PlusAnonymousUserDataModel(model);
         tempModel.setTempPrefs(tempPrefs);
 
         // Make a weighted slope one recommender
-//        Recommender recommender = new SlopeOneRecommender(newmodel);
-        Recommender recommender = new CachingRecommender(recommender);
+        Recommender slopeOneRecommender = new SlopeOneRecommender(tempModel);
+        Recommender cachingRecommender = new CachingRecommender(slopeOneRecommender);
+
 
         // make recommendations for a new user
-        System.out.println("Recommended items:" + recommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3));
+        List<RecommendedItem> recommendedItems = cachingRecommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3);
+//      System.out.println("Recommended items:" + recommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3));
 
+        List<String> outpuList = new ArrayList<>();
+
+        for (RecommendedItem recommendedItem : recommendedItems) {
+            String titleString = movieTitles.get((int)recommendedItem.getItemID());
+            outpuList.add(titleString);
+        }
+
+        // clear preferences
         tempModel.clearTempPrefs();
+
+        return outpuList;
     }
 
     protected void readTitles() throws IOException {
@@ -163,6 +182,16 @@ public class MovieRecommender {
     public void printRecommendations(int userId, int numMovies) throws TasteException {
         System.out.printf("rekomendacje dla uzytkownika %d: ", userId);
         List<String> recommendationsList = this.recommendMovies(userId, numMovies);
+
+        for (String string : recommendationsList) {
+            System.out.print(string + " ");
+        }
+
+        System.out.println();
+    }
+
+    public void printRecommendations(List<String> recommendationsList) {
+        System.out.printf("rekomendacje dla uzytkownika tymczasowego: ");
 
         for (String string : recommendationsList) {
             System.out.print(string + " ");

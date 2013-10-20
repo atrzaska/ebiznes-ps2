@@ -45,6 +45,8 @@ public class Main {
 //      System.out.println(recom.mostSimilarItems(1, 2)); // wygeneruj 2 rekomendacje na podstawie oszacowanego podobieństwa dla filmu 1
 
         System.out.println("----------------------------------------------------------------------------------");
+        movieRecommender.printRecommendations(movieRecommender.recommendMoviesUser12());
+        System.out.println("----------------------------------------------------------------------------------");
         System.out.println("generuje rekomendacje dla uzytkownikow");
         // generuj rekomenacje dla uzytownikow
         for (int i = 0; i < movieRecommender.getModel().getNumUsers(); i++) {
