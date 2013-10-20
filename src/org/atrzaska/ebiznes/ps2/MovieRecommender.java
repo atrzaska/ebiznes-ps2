@@ -69,13 +69,14 @@ public class MovieRecommender {
         PlusAnonymousUserDataModel tempModel = new PlusAnonymousUserDataModel(model);
         tempModel.setTempPrefs(tempPrefs);
 
-        // Make a weighted slope one recommender
-        Recommender slopeOneRecommender = new SlopeOneRecommender(tempModel);
-        Recommender cachingRecommender = new CachingRecommender(slopeOneRecommender);
+        //tworzenie systemu rekomendującego i generowanie rekomendacji
+        Recommender recommender = new GenericItemBasedRecommender(tempModel, itemSimilarity);
+//        Recommender recommender = new SlopeOneRecommender(tempModel);
+//        Recommender cachingRecommender = new CachingRecommender(recommender);
 
 
         // make recommendations for a new user
-        List<RecommendedItem> recommendedItems = cachingRecommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3);
+        List<RecommendedItem> recommendedItems = recommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3);
 //      System.out.println("Recommended items:" + recommender.recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, 3));
 
         List<String> outpuList = new ArrayList<>();
