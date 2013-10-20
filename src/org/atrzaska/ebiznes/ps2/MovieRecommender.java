@@ -63,46 +63,7 @@ public class MovieRecommender {
         return outpuList;
     }
 
-    public List<String> recommendMoviesUser12() throws TasteException {
-
-        PreferenceArray tempPrefs = new GenericUserPreferenceArray(17);
-        tempPrefs.setUserID(0, PlusAnonymousUserDataModel.TEMP_USER_ID);
-
-        tempPrefs.setItemID(0, 1);
-        tempPrefs.setItemID(1, 2);
-        tempPrefs.setItemID(2, 3);
-        tempPrefs.setItemID(3, 4);
-        tempPrefs.setItemID(4, 6);
-        tempPrefs.setItemID(5, 7);
-        tempPrefs.setItemID(6, 8);
-        tempPrefs.setItemID(7, 10);
-        tempPrefs.setItemID(8, 11);
-        tempPrefs.setItemID(9, 13);
-        tempPrefs.setItemID(10, 14);
-        tempPrefs.setItemID(11, 19);
-        tempPrefs.setItemID(12, 20);
-        tempPrefs.setItemID(13, 21);
-        tempPrefs.setItemID(14, 22);
-        tempPrefs.setItemID(15, 23);
-        tempPrefs.setItemID(16, 24);
-
-        tempPrefs.setValue(0, 2.0f);
-        tempPrefs.setValue(1, 3.0f);
-        tempPrefs.setValue(2, 4.0f);
-        tempPrefs.setValue(3, 4.0f);
-        tempPrefs.setValue(4, 2.0f);
-        tempPrefs.setValue(5, 4.0f);
-        tempPrefs.setValue(6, 5.0f);
-        tempPrefs.setValue(7, 4.0f);
-        tempPrefs.setValue(8, 4.0f);
-        tempPrefs.setValue(9, 5.0f);
-        tempPrefs.setValue(10, 3.0f);
-        tempPrefs.setValue(11, 5.0f);
-        tempPrefs.setValue(12, 4.0f);
-        tempPrefs.setValue(13, 4.0f);
-        tempPrefs.setValue(14, 3.0f);
-        tempPrefs.setValue(15, 5.0f);
-        tempPrefs.setValue(16, 5.0f);
+    public List<String> recommendMoviesForNewUser(PreferenceArray tempPrefs) throws TasteException {
 
         // prepare new user's preferences
         PlusAnonymousUserDataModel tempModel = new PlusAnonymousUserDataModel(model);
